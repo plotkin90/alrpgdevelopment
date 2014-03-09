@@ -183,6 +183,7 @@ new racen;
 new vaultdoor;
 new bool:noooc;
 new dh;
+new lotto;
 //===========[textdraw]=========================================================
 new PlayerText:lvlexp[MAX_PLAYERS];
 new PlayerText:Time[MAX_PLAYERS];
@@ -258,6 +259,7 @@ new HelpMSG[15][] = {
 #define 	ADMIN_SPEC_TYPE_NONE 		0
 #define 	ADMIN_SPEC_TYPE_PLAYER 		1
 #define 	ADMIN_SPEC_TYPE_VEHICLE 	2
+#define random_ex(%0,%1,%2) %0+(random((%1-%0)/%2+1)*%2)  
 //==========[Define Dialog]=====================================================
 #define 	DIALOG_LOGIN         	1
 #define 	DIALOG_REGISTER     	2
@@ -4419,6 +4421,25 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						PlayerInfo[playerid][pTie] = true;
 						SendClientMessage(playerid, COLOR_LIGHTBLUE, "Вы купили веревку");
 					}
+					case 4:
+					{
+						if(GetMoney(playerid) < 100) return SendClientMessage(playerid,-1,"{F31212}[ОШИБКА]{FFFFFF} У вас недостаточно средств!");
+						if(GetPVarInt(playerid, "lotto") > 0) return SendClientMessage(playerid, -1, "{F31212}[ОШИБКА]{FFFFFF} У вас уже есть лотерейный билет");
+						SetPVarInt(playerid, "lotto", random_ex(100, 999, 1));
+						lotto ++;
+						new hour; 
+						gettime(hour); 
+						new rulesdialog[700],string[144]; 
+						SendClientMessage(playerid, C_BLUE, "Вы купили лотерейный билет"); 
+						format(string,sizeof(string), "Ваше счастливое число: {ffd200}%d\n\n",GetPVarInt(playerid, "lotto")),strcat(rulesdialog,string); 
+						strcat(rulesdialog, "{ffffff}Вы зарегестрированы в лотерее, резуельтат будет известен во\n"); 
+						format(string,sizeof(string), "{ffffff}время ближайшего розыгрыша, который пройдет в %d:02\n",hour+1), strcat(rulesdialog,string); 
+						strcat(rulesdialog, "{ffffff}Не выходите из игры чтобы принять в нём участие.\n\n"); 
+						strcat(rulesdialog, "{ffffff}Выигрыш будет зависить совпало ли ваше число в в\n"); 
+						strcat(rulesdialog, "{ffffff}вашем счастливом числе и в числе, которое выпадает во\n"); 
+						strcat(rulesdialog, "{ffffff}время розыгрыша.\n\n");  
+						return ShowPlayerDialog(playerid, 999, 1,""PREFIX" Лотерея", rulesdialog, "Ок", ""); 
+					}
 				}
 			}
 		}
@@ -6905,9 +6926,15 @@ public UpdateTime()
 	if(minute == 00) {
 		foreach(new i: Player) {
 			PayDay(i);
+			SendClientMessage(i, C_BLUE, "Через две минуты начнется лотерея! Билеты можно приобрести в магазинах 24/7");
 		}
 		return true;
-	}	
+	}
+	if(minute == 02) {
+		foreach(new i: Player) {
+			GoLotto(i);
+		}
+	}
 	switch(hour)
 	{
 		case 21..23: SetWeather(17);
@@ -10561,7 +10588,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			}
 			if (IsPlayerInRangeOfPoint(playerid,3, Magazin[id][mBuyX], Magazin[id][mBuyY], Magazin[id][mBuyZ]))
 			{
-				SPD(playerid,DIALOG_BUY,DIALOG_STYLE_LIST,""PREFIX"  Покупка","{3CBBF7}[1]{ffffff} Набор отмычек\t(1500$)\n{3CBBF7}[2]{ffffff} Фотоаппарат\t(150$)\n{3CBBF7}[3]{ffffff} Пачка сигареты (20 шт.)\t(100$)\n{3CBBF7}[4]{ffffff} Веревка\t(100$)","Выбрать","Отмена");
+				SPD(playerid,DIALOG_BUY,DIALOG_STYLE_LIST,""PREFIX"  Покупка","{3CBBF7}[1]{ffffff} Набор отмычек\t(1500$)\n{3CBBF7}[2]{ffffff} Фотоаппарат\t(150$)\n{3CBBF7}[3]{ffffff} Пачка сигареты (20 шт.)\t(100$)\n{3CBBF7}[4]{ffffff} Веревка\t(100$)\n{3CBBF7}[5]{ffffff} Лотерейный билет\t(100$)","Выбрать","Отмена");
 			}
 		}
 		for(new i = 1; i < sizeof(Ammo); i++)
@@ -13531,3 +13558,16 @@ ShowTime(playerid) {
 	ShowPlayerDialog(playerid, DIALOG_TIMEUSE, DIALOG_STYLE_MSGBOX, ""PREFIX" Время", string, "Выход", ""); 
 	return true;
 }
+GoLotto(playerid) { 
+    new string[128]; 
+    new lottoin = random_ex(100, 999, 1), hour;
+	gettime(hour);
+    format(string, sizeof(string),"Сейчас %s! Начинаем лотерейный розыгрыш. Ваше счастливое число: %d", hour, GetPVarInt(playerid, "lotto")); 
+    SendClientMessage(playerid,0xffd200FF,string); 
+    format(string, sizeof(string), "За этот час было куплено %s счастливое число этого часа: {ff9a00}%d", nformat(lotto,"билет","билета","билетов"), lottoin); 
+    SendClientMessage(playerid,0x63cb00ff,string); 
+    lotto = 0; 
+    if(GetPVarInt(playerid, "lotto") == lottoin) return SendClientMessage(playerid, 0x5AB200FF, "Ваш номер в билете совпал с выигрышным. Поздравляем, ваш выигрыш 5.000$"), SetMoney(playerid, 5000); 
+    SetPVarInt(playerid, "lotto", 0);
+    return true;
+} 

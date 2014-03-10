@@ -1,7 +1,6 @@
 #include <a_samp>
 #include <a_mysql>
 #include <sscanf2>
-//#include <antiattack>
 #include <dc_cmd>
 #include <foreach>
 #include <streamer>
@@ -10,8 +9,8 @@
 #include <crp>
 #include <mSelection>
 #include <PointToPoint>
-//#include <cleo>
 #include <crashdetect>
+#include <cbug>
 //==========[new]===============================================================
 #if defined MAX_PLAYERS
 #undef MAX_PLAYERS
@@ -13575,3 +13574,17 @@ WeatherUpdateNight() {
 	return SetWeather(RandomSet(16,32,38,42,43,50));
 }
 RandomSet(...) return getarg(random(numargs()));
+public OnPlayerCBug(playerid, weaponid, interval) {
+    if(nadm[playerid]) {
+		nadm[playerid] = false;
+		dmcount--;
+		ServerSetPlayerHealth(playerid,0);
+		SetPlayerInterior(playerid,0);
+		ServerResetPlayerWeapons(playerid);
+		SendClientMessage(playerid, C_BLUE, "¬ы были удалены с ивента за использование бага C+ !");
+		return true;
+	}
+	ServerResetPlayerWeapons(playerid);
+	SendClientMessage(playerid, C_BLUE, "¬ы были лишены оружи€ за использование бага C+ !");
+	return true;
+}

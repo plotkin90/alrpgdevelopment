@@ -5121,6 +5121,11 @@ stock LoadAccount(playerid, password[])
 		if(PlayerInfo[playerid][pTakeMoney] > 0) PlayerInfo[playerid][pTakeMoney] = 0;
 		SetPVarString(playerid, "iplog", ip);
 		GivePlayerMoney(playerid, PlayerInfo[playerid][pMoney]);
+		switch(PlayerInfo[playerid][pLevel])
+		{
+			case 0: PlayerInfo[playerid][pExpNext] = 3;
+			default: PlayerInfo[playerid][pExpNext] = (PlayerInfo[playerid][pLevel]+1)*3;
+		}
 		CreateTextDraw(playerid);
 		PlayerTextDrawShow(playerid,Time[playerid]);
 		PlayerTextDrawShow(playerid,Site[playerid]);
@@ -11293,7 +11298,7 @@ public Fuel()
 					fuel[i] --;
 					if(fuel[i] <= 45) format(str1, sizeof(str1), "(~r~%d L~w~)", fuel[i]);
 					else if(fuel[i] <= 100) format(str1, sizeof(str1), "(~y~%d L~w~)", fuel[i]);
-					else if(fuel[i] <= 1000) format(str1, sizeof(str1), "(~g~%%d L~w~)", fuel[i]);
+					else if(fuel[i] <= 1000) format(str1, sizeof(str1), "(~g~%d L~w~)", fuel[i]);
 					PlayerTextDrawSetString(playerid, Textdraw[8][playerid], str1);
 					switch(fuel[i])
 					{

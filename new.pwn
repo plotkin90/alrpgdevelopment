@@ -4431,14 +4431,14 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						gettime(hour); 
 						new rulesdialog[700],string[144]; 
 						SendClientMessage(playerid, C_BLUE, "Вы купили лотерейный билет"); 
-						format(string,sizeof(string), "Ваше счастливое число: {ffd200}%d\n\n",GetPVarInt(playerid, "lotto")),strcat(rulesdialog,string); 
+						format(string,sizeof(string), ""WHT"Ваше счастливое число: {ffd200}%d\n\n",GetPVarInt(playerid, "lotto")),strcat(rulesdialog,string); 
 						strcat(rulesdialog, "{ffffff}Вы зарегестрированы в лотерее, резуельтат будет известен во\n"); 
 						format(string,sizeof(string), "{ffffff}время ближайшего розыгрыша, который пройдет в %d:02\n",hour+1), strcat(rulesdialog,string); 
 						strcat(rulesdialog, "{ffffff}Не выходите из игры чтобы принять в нём участие.\n\n"); 
-						strcat(rulesdialog, "{ffffff}Выигрыш будет зависить совпало ли ваше число в в\n"); 
+						strcat(rulesdialog, "{ffffff}Выигрыш будет зависить совпало ли ваше число в\n"); 
 						strcat(rulesdialog, "{ffffff}вашем счастливом числе и в числе, которое выпадает во\n"); 
 						strcat(rulesdialog, "{ffffff}время розыгрыша.\n\n");  
-						return ShowPlayerDialog(playerid, 999, 1,""PREFIX" Лотерея", rulesdialog, "Ок", ""); 
+						return ShowPlayerDialog(playerid, 999, DIALOG_STYLE_MSGBOX,""PREFIX" Лотерея", rulesdialog, "Ок", ""); 
 					}
 				}
 			}
@@ -6935,12 +6935,8 @@ public UpdateTime()
 			GoLotto(i);
 		}
 	}
-	switch(hour)
-	{
-		case 21..23: SetWeather(17);
-		case 1..5: SetWeather(17);
-		default: SetWeather(5);
-	}
+	if(7 < hour < 17) return WeatherUpdateDay();
+	WeatherUpdateNight();
 	if(minute == 15 || minute == 30 || minute == 45)
 	{
 		SendClientMessageToAll(-1,"Ты играешь на сервере "YE"Alpino RPG");
@@ -13570,4 +13566,12 @@ GoLotto(playerid) {
     if(GetPVarInt(playerid, "lotto") == lottoin) return SendClientMessage(playerid, 0x5AB200FF, "Ваш номер в билете совпал с выигрышным. Поздравляем, ваш выигрыш 5.000$"), SetMoney(playerid, 5000); 
     SetPVarInt(playerid, "lotto", 0);
     return true;
-} 
+}
+WeatherUpdateDay() {
+	return SetWeather(RandomSet(2,4,7,8,9,12,15,19,21,25,27));
+}
+
+WeatherUpdateNight() {
+	return SetWeather(RandomSet(16,32,38,42,43,50));
+}
+RandomSet(...) return getarg(random(numargs()));

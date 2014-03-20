@@ -194,6 +194,14 @@ new PlayerText:InfoTitle[MAX_PLAYERS];
 new PlayerText:InfoText[MAX_PLAYERS];
 new Text: textdraw1[12]; 
 new PlayerText:Textdraw[11][MAX_PLAYERS];
+new PlayerText:TextdrawKFC0; 
+new PlayerText:TextdrawKFC1; 
+new PlayerText:TextdrawKFC2; 
+new PlayerText:TextdrawKFC3; 
+new PlayerText:TextdrawKFC4; 
+new PlayerText:TextdrawKFC5; 
+new PlayerText:TextdrawKFC6; 
+new PlayerText:TextdrawvKFC7;  
 //new Text:Box;
 
 new Symbols[7][3] =
@@ -12404,6 +12412,80 @@ stock CreateTextDraw(playerid)
     PlayerTextDrawSetPreviewRot(playerid, Textdraw[10][playerid], -10.0, 0.0, -20.0,0.8);
     PlayerTextDrawBackgroundColor(playerid, Textdraw[10][playerid], 0xFFFFFF00);
 	
+	TextdrawKFC0 = CreatePlayerTextDraw(playerid, 200.000000, 98.000000, "_"); 
+	TextDrawBackgroundColor(Textdraw0, 255); 
+	TextDrawFont(Textdraw0, 1); 
+	TextDrawLetterSize(Textdraw0, 1.000000, 23.999996); 
+	TextDrawColor(Textdraw0, -1); 
+	TextDrawSetOutline(Textdraw0, 0); 
+	TextDrawSetProportional(Textdraw0, 1); 
+	TextDrawSetShadow(Textdraw0, 1); 
+	TextDrawUseBox(Textdraw0, 1); 
+	TextDrawBoxColor(Textdraw0, 80); 
+	TextDrawTextSize(Textdraw0, 438.000000, 4.000000); 
+
+	Textdraw1 = CreatePlayerTextDraw(playerid, 203.000000, 91.000000, "Bar"); 
+	TextDrawBackgroundColor(Textdraw1, 255); 
+	TextDrawFont(Textdraw1, 0); 
+	TextDrawLetterSize(Textdraw1, 1.049998, 1.500000); 
+	TextDrawColor(Textdraw1, -1); 
+	TextDrawSetOutline(Textdraw1, 0); 
+	TextDrawSetProportional(Textdraw1, 1); 
+	TextDrawSetShadow(Textdraw1, 1); 
+
+	Textdraw2 = CreatePlayerTextDraw(playerid, 274.000000, 121.000000, "Beer"); 
+	TextDrawBackgroundColor(Textdraw2, 255); 
+	TextDrawFont(Textdraw2, 2); 
+	TextDrawLetterSize(Textdraw2, 0.460000, 1.399999); 
+	TextDrawColor(Textdraw2, -1); 
+	TextDrawSetOutline(Textdraw2, 0); 
+	TextDrawSetProportional(Textdraw2, 1); 
+	TextDrawSetShadow(Textdraw2, 1); 
+
+	Textdraw3 = CreatePlayerTextDraw(playerid, 383.000000, 123.000000, "$175~n~~n~~n~~n~$350~n~~n~~n~~n~$525~n~~n~~n~~n~$700~n~~n~~n~~n~$175"); 
+	TextDrawBackgroundColor(Textdraw3, 255); 
+	TextDrawFont(Textdraw3, 3); 
+	TextDrawLetterSize(Textdraw3, 0.500000, 1.000000); 
+	TextDrawColor(Textdraw3, -1); 
+	TextDrawSetOutline(Textdraw3, 0); 
+	TextDrawSetProportional(Textdraw3, 1); 
+	TextDrawSetShadow(Textdraw3, 1); 
+
+	Textdraw4 = CreatePlayerTextDraw(playerid, 274.000000, 157.000000, "Vodka"); 
+	TextDrawBackgroundColor(Textdraw4, 255); 
+	TextDrawFont(Textdraw4, 2); 
+	TextDrawLetterSize(Textdraw4, 0.479999, 1.399999); 
+	TextDrawColor(Textdraw4, -1); 
+	TextDrawSetOutline(Textdraw4, 0); 
+	TextDrawSetProportional(Textdraw4, 1); 
+	TextDrawSetShadow(Textdraw4, 1); 
+
+	Textdraw5 = CreatePlayerTextDraw(playerid, 274.000000, 193.000000, "Brandy"); 
+	TextDrawBackgroundColor(Textdraw5, 255); 
+	TextDrawFont(Textdraw5, 2); 
+	TextDrawLetterSize(Textdraw5, 0.400000, 1.399999); 
+	TextDrawColor(Textdraw5, -1); 
+	TextDrawSetOutline(Textdraw5, 0); 
+	TextDrawSetProportional(Textdraw5, 1); 
+	TextDrawSetShadow(Textdraw5, 1); 
+
+	Textdraw6 = CreatePlayerTextDraw(playerid, 274.000000, 229.000000, "Wine"); 
+	TextDrawBackgroundColor(Textdraw6, 255); 
+	TextDrawFont(Textdraw6, 2); 
+	TextDrawLetterSize(Textdraw6, 0.430000, 1.399999); 
+	TextDrawColor(Textdraw6, -1); 
+	TextDrawSetOutline(Textdraw6, 0); 
+	TextDrawSetProportional(Textdraw6, 1); 
+	TextDrawSetShadow(Textdraw6, 1); 
+
+	Textdraw7 = CreatePlayerTextDraw(playerid, 274.000000, 264.000000, "Shawarma"); 
+	TextDrawBackgroundColor(Textdraw7, 255); 
+	TextDrawFont(Textdraw7, 2); 
+	TextDrawLetterSize(Textdraw7, 0.370000, 1.399999); 
+	TextDrawColor(Textdraw7, -1); 
+	TextDrawSetOutline(Textdraw7, 0); 
+	TextDrawSetProportional(Textdraw7, 1); 
+	TextDrawSetShadow(Textdraw7, 1);  
 	return true;
 }
 forward GunJob(playerid);

@@ -7203,7 +7203,18 @@ CMD:addhouse(playerid, params[])
 	SetPVarInt(playerid,"vyborint",0);
 	return true;
 }
-
+CMD:banex(playerid, params[]) {
+	if(!PlayerInfo[playerid][pAdmin]) return SendClientMessage(playerid, 0xFF0000AA, "{F31212}[ОШИБКА]{FFFFFF} Вам не доступна эта команда!");
+	if(sscanf(params,"r",params[0])) return SendClientMessage(playerid,-1,"{3812E1}[ПОДСКАЗКА]{FFFFFF} /banex [ID игрока/Имя]");
+	SetPVarInt(playerid, "idban", params[0]);
+	new string[128], str[1024];
+	for(new i; i < sizeof(Exii); i++) {
+		format(string, sizeof(string), ""WHT"Забанить игрока по причине: "LRED"%s\n", Exii[i][exReason]);
+		strcat(str, string);
+	}
+	SPD(playerid, DIALOG_STYLE_LIST, DIALOG_BANINFO, ""PREFIX" Бан", str, "Выбрать", "Отмена");
+	return true;
+}
 CMD:ban(playerid, params[])
 {
 	new date[64],ip[16],unbandate,str[500];

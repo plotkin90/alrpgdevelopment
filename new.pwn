@@ -30,9 +30,10 @@ new PlayerText:FULLRECON[MAX_PLAYERS];
 new totalhouses = 0;
 new	year, month,day,player[MAX_PLAYERS][21];
 enum ex { exReason[64], exDay };
-new Exii[2][ex] = {
+new Exii[3][ex] = {
 	{ "Оскорбление родных", 91 },
-	{ "Использование чит программ", 30 }
+	{ "Использование чит программ", 30 },
+	{ "Багоюз", 15 }
 };
 enum Bank { BankName[70], Float:BankX, Float:BankY, Float:BankZ };
 new BankInfo[4][Bank] = {
@@ -237,7 +238,7 @@ new HelpMSG[15][] = {
 #define 	MAX_FRACTION 	   	 18
 #define 	MAX_SPIKESTRIPS 	 200
 #define		MAX_FRACTION_CARS	 200
-#define     GameMode         	"AL:RPG New Era 0.1 alpha"
+#define     GameMode         	"AL:RPG New Era 0.2 alpha"
 #define 	BYTES_PER_CELL 		(cellbits / 8)
 #define 	BURGER_PRICE		15
 #define 	CHICKEN_PRICE		10
@@ -2010,9 +2011,19 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		{
 			if(!response) return true;
 			new string[128];
-			new i = GetPVarInt(playerid,"idban");
-			format(string,sizeof(string),"%s забанил(а) %s на %d дней. Причина: %s",PlayerInfo[i][pName],Exii[listitem][exDay],Exii[listitem][exReason]);
+			new i = GetPVarInt(playerid,"idban"), date[64],ip[16],unbandate,str[500];
+			format(string,sizeof(string),"Alpino:  %s был(а) забанен(а) %sом %s на %s. Причина: %s",NameAdmin(playerid), PlayerInfo[i][pName],nformat(Exii[listitem][exDay],"день","дня","дней"),Exii[listitem][exReason]);
 			SendClientMessageToAll(COLOR_LIGHTRED,string);
+			unbandate = gettime() + Exii[listitem][exDay]*86400;
+			getdate(year, month, day);
+			GetPlayerIp(i, ip, 32);
+			format(date, 16, "%02d.%02d.%04d",day, month, year);
+			format(str, sizeof(str), "INSERT INTO `bans` (name, IP, bandate, time, unbandate, reason, admin) VALUES ('%s', '%s', '%s', %d, %d, '%s', '%s')", PlayerInfo[i][pName], ip, date, Exii[listitem][exDay], unbandate, Exii[listitem][exReason], PlayerInfo[playerid][pName]);
+			mysql_query(str);
+			ALKick(i);
+			SetPVarInt(playerid, "banotkat", 5);
+			SetPVarInt(playerid, "bc", GetPVarInt(playerid, "bc")+1);
+			if(GetPVarInt(playerid, "banotkat") > 0 && GetPVarInt(playerid, "bc") > 2){ PlayerInfo[playerid][pAdmin] = 0; }
 			return true;
 		}
 		case DIALOG_GIVEGUN:

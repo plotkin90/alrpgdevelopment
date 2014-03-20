@@ -2012,7 +2012,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if(!response) return true;
 			new string[128];
 			new i = GetPVarInt(playerid,"idban"), date[64],ip[16],unbandate,str[500];
-			format(string,sizeof(string),"Alpino:  %s был(а) забанен(а) %sом %s на %s. Причина: %s",NameAdmin(playerid), PlayerInfo[i][pName],nformat(Exii[listitem][exDay],"день","дня","дней"),Exii[listitem][exReason]);
+			format(string,sizeof(string),"Alpino:  %s был(а) забанен(а) %sом %s на %s. Причина: %s",PlayerInfo[i][pName], NameAdmin(playerid), PlayerInfo[playerid][pName], nformat(Exii[listitem][exDay],"день","дня","дней"),Exii[listitem][exReason]);
 			SendClientMessageToAll(COLOR_LIGHTRED,string);
 			unbandate = gettime() + Exii[listitem][exDay]*86400;
 			getdate(year, month, day);
@@ -7212,7 +7212,7 @@ CMD:banex(playerid, params[]) {
 		format(string, sizeof(string), ""WHT"Забанить игрока по причине: "LRED"%s\n", Exii[i][exReason]);
 		strcat(str, string);
 	}
-	SPD(playerid, DIALOG_STYLE_LIST, DIALOG_BANINFO, ""PREFIX" Бан", str, "Выбрать", "Отмена");
+	SPD(playerid, DIALOG_BANINFO, DIALOG_STYLE_LIST, ""PREFIX" Бан", str, "Выбрать", "Отмена");
 	return true;
 }
 CMD:ban(playerid, params[])

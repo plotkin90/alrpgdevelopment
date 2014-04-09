@@ -201,7 +201,16 @@ new PlayerText:TextdrawKFC3;
 new PlayerText:TextdrawKFC4; 
 new PlayerText:TextdrawKFC5; 
 new PlayerText:TextdrawKFC6; 
-new PlayerText:TextdrawvKFC7;  
+new PlayerText:TextdrawKFC7;
+new PlayerText:Area;
+new PlayerText:Area1;
+new PlayerText:Area2;
+new PlayerText:Area3;
+new PlayerText:Area4;
+new PlayerText:Area5;
+new PlayerText:Area6;
+new PlayerText:Area7;
+new PlayerText:Area8;
 //new Text:Box;
 
 new Symbols[7][3] =
@@ -1069,8 +1078,12 @@ public OnPlayerConnect(playerid)
 			if(count == 4) { SendClientMessage(playerid,0xE0EA64AA,"Cмените ваш ник! В вашем нике более 3 цифр!"); ALKick(playerid); break; }
 		}
 	}
+	CreateArea(playerid);
+	ShowGUI(playerid);
 	if(GetAccountID(playerid)) ShowLogin(playerid);
     else ShowRegister(playerid);
+	InterpolateCameraPos(playerid, 244.116943, -1844.963256, 41.799915, 821.013366, -1641.763793, 29.977857, 15000);
+	InterpolateCameraLookAt(playerid, 247.605590, -1841.989990, 39.802570, 817.645996, -1645.395751, 29.292520, 15000);
 	return true;
 }
 
@@ -4590,8 +4603,17 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			new string[300];
 			if(response)
 			{
-				format(string,sizeof(string),"{3CBBF7}[1]{FFFFFF}\tСок(%d$)\n{3CBBF7}[2]{FFFFFF}\tПиво(%d$)\n{3CBBF7}[3]{FFFFFF}\tВиски(%d$)\n{3CBBF7}[4]{FFFFFF}\tВодка(%d$)",PRICE_JUICE,PRICE_BEER,PRICE_WICKEY,PRICE_VODKA);
-				SPD(playerid,DIALOG_CLUB_BAR,DIALOG_STYLE_LIST,""PREFIX" КПК | Бар",string,"Выбрать","Назад");
+				/*format(string,sizeof(string),"{3CBBF7}[1]{FFFFFF}\tСок(%d$)\n{3CBBF7}[2]{FFFFFF}\tПиво(%d$)\n{3CBBF7}[3]{FFFFFF}\tВиски(%d$)\n{3CBBF7}[4]{FFFFFF}\tВодка(%d$)",PRICE_JUICE,PRICE_BEER,PRICE_WICKEY,PRICE_VODKA);
+				SPD(playerid,DIALOG_CLUB_BAR,DIALOG_STYLE_LIST,""PREFIX" КПК | Бар",string,"Выбрать","Назад");*/
+				PlayerTextDrawShow(playerid, TextdrawKFC0);
+				PlayerTextDrawShow(playerid, TextdrawKFC1);
+				PlayerTextDrawShow(playerid, TextdrawKFC2);
+				PlayerTextDrawShow(playerid, TextdrawKFC3);
+				PlayerTextDrawShow(playerid, TextdrawKFC4);
+				PlayerTextDrawShow(playerid, TextdrawKFC5);
+				PlayerTextDrawShow(playerid, TextdrawKFC6);
+				PlayerTextDrawShow(playerid, TextdrawKFC7);
+				SelectTextDraw(playerid, 0xFF4040AA);
 			}
 			else
 			{
@@ -5148,6 +5170,8 @@ stock LoadAccount(playerid, password[])
 		CreateTextDraw(playerid);
 		PlayerTextDrawShow(playerid,Time[playerid]);
 		PlayerTextDrawShow(playerid,Site[playerid]);
+		HideGUI(playerid);
+		SetCameraBehindPlayer(playerid);
 	}
 	else
 	{
@@ -12413,79 +12437,85 @@ stock CreateTextDraw(playerid)
     PlayerTextDrawBackgroundColor(playerid, Textdraw[10][playerid], 0xFFFFFF00);
 	
 	TextdrawKFC0 = CreatePlayerTextDraw(playerid, 200.000000, 98.000000, "_"); 
-	TextDrawBackgroundColor(Textdraw0, 255); 
-	TextDrawFont(Textdraw0, 1); 
-	TextDrawLetterSize(Textdraw0, 1.000000, 23.999996); 
-	TextDrawColor(Textdraw0, -1); 
-	TextDrawSetOutline(Textdraw0, 0); 
-	TextDrawSetProportional(Textdraw0, 1); 
-	TextDrawSetShadow(Textdraw0, 1); 
-	TextDrawUseBox(Textdraw0, 1); 
-	TextDrawBoxColor(Textdraw0, 80); 
-	TextDrawTextSize(Textdraw0, 438.000000, 4.000000); 
+	PlayerTextDrawBackgroundColor(playerid, TextdrawKFC0, 255); 
+	PlayerTextDrawFont(playerid, TextdrawKFC0, 1); 
+	PlayerTextDrawLetterSize(playerid, TextdrawKFC0, 1.000000, 23.999996); 
+	PlayerTextDrawColor(playerid, TextdrawKFC0, -1); 
+	PlayerTextDrawSetOutline(playerid, TextdrawKFC0, 0); 
+	PlayerTextDrawSetProportional(playerid, TextdrawKFC0, 1); 
+	PlayerTextDrawSetShadow(playerid, TextdrawKFC0, 1); 
+	PlayerTextDrawUseBox(playerid, TextdrawKFC0, 1); 
+	PlayerTextDrawBoxColor(playerid, TextdrawKFC0, 80); 
+	PlayerTextDrawTextSize(playerid, TextdrawKFC0, 438.000000, 4.000000); 
 
-	Textdraw1 = CreatePlayerTextDraw(playerid, 203.000000, 91.000000, "Bar"); 
-	TextDrawBackgroundColor(Textdraw1, 255); 
-	TextDrawFont(Textdraw1, 0); 
-	TextDrawLetterSize(Textdraw1, 1.049998, 1.500000); 
-	TextDrawColor(Textdraw1, -1); 
-	TextDrawSetOutline(Textdraw1, 0); 
-	TextDrawSetProportional(Textdraw1, 1); 
-	TextDrawSetShadow(Textdraw1, 1); 
+	TextdrawKFC1 = CreatePlayerTextDraw(playerid, 203.000000, 91.000000, "Bar"); 
+	PlayerTextDrawBackgroundColor(playerid, TextdrawKFC1, 255); 
+	PlayerTextDrawFont(playerid, TextdrawKFC1, 0); 
+	PlayerTextDrawLetterSize(playerid, TextdrawKFC1, 1.049998, 1.500000); 
+	PlayerTextDrawColor(playerid, TextdrawKFC1, -1); 
+	PlayerTextDrawSetOutline(playerid, TextdrawKFC1, 0); 
+	PlayerTextDrawSetProportional(playerid, TextdrawKFC1, 1); 
+	PlayerTextDrawSetShadow(playerid, TextdrawKFC1, 1); 
 
-	Textdraw2 = CreatePlayerTextDraw(playerid, 274.000000, 121.000000, "Beer"); 
-	TextDrawBackgroundColor(Textdraw2, 255); 
-	TextDrawFont(Textdraw2, 2); 
-	TextDrawLetterSize(Textdraw2, 0.460000, 1.399999); 
-	TextDrawColor(Textdraw2, -1); 
-	TextDrawSetOutline(Textdraw2, 0); 
-	TextDrawSetProportional(Textdraw2, 1); 
-	TextDrawSetShadow(Textdraw2, 1); 
+	TextdrawKFC2 = CreatePlayerTextDraw(playerid, 274.000000, 121.000000, "Beer"); 
+	PlayerTextDrawBackgroundColor(playerid, TextdrawKFC2, 255); 
+	PlayerTextDrawFont(playerid, TextdrawKFC2, TEXT_DRAW_FONT_MODEL_PREVIEW); 
+	PlayerTextDrawLetterSize(playerid, TextdrawKFC2, 0.460000, 1.399999); 
+	PlayerTextDrawColor(playerid, TextdrawKFC2, -1); 
+	PlayerTextDrawSetOutline(playerid, TextdrawKFC2, 0); 
+	PlayerTextDrawSetProportional(playerid, TextdrawKFC2, 1); 
+	PlayerTextDrawSetShadow(playerid, TextdrawKFC2, 1);
+	PlayerTextDrawSetPreviewModel(playerid, TextdrawKFC2, 1950);
 
-	Textdraw3 = CreatePlayerTextDraw(playerid, 383.000000, 123.000000, "$175~n~~n~~n~~n~$350~n~~n~~n~~n~$525~n~~n~~n~~n~$700~n~~n~~n~~n~$175"); 
-	TextDrawBackgroundColor(Textdraw3, 255); 
-	TextDrawFont(Textdraw3, 3); 
-	TextDrawLetterSize(Textdraw3, 0.500000, 1.000000); 
-	TextDrawColor(Textdraw3, -1); 
-	TextDrawSetOutline(Textdraw3, 0); 
-	TextDrawSetProportional(Textdraw3, 1); 
-	TextDrawSetShadow(Textdraw3, 1); 
+	TextdrawKFC3 = CreatePlayerTextDraw(playerid, 383.000000, 123.000000, "$175~n~~n~~n~~n~$350~n~~n~~n~~n~$525~n~~n~~n~~n~$700~n~~n~~n~~n~$175"); 
+	PlayerTextDrawBackgroundColor(playerid, TextdrawKFC3, 255); 
+	PlayerTextDrawFont(playerid, TextdrawKFC3, 3); 
+	PlayerTextDrawLetterSize(playerid, TextdrawKFC3, 0.500000, 1.000000); 
+	PlayerTextDrawColor(playerid, TextdrawKFC3, -1); 
+	PlayerTextDrawSetOutline(playerid, TextdrawKFC3, 0); 
+	PlayerTextDrawSetProportional(playerid, TextdrawKFC3, 1); 
+	PlayerTextDrawSetShadow(playerid, TextdrawKFC3, 1); 
 
-	Textdraw4 = CreatePlayerTextDraw(playerid, 274.000000, 157.000000, "Vodka"); 
-	TextDrawBackgroundColor(Textdraw4, 255); 
-	TextDrawFont(Textdraw4, 2); 
-	TextDrawLetterSize(Textdraw4, 0.479999, 1.399999); 
-	TextDrawColor(Textdraw4, -1); 
-	TextDrawSetOutline(Textdraw4, 0); 
-	TextDrawSetProportional(Textdraw4, 1); 
-	TextDrawSetShadow(Textdraw4, 1); 
+	TextdrawKFC4 = CreatePlayerTextDraw(playerid, 274.000000, 157.000000, "Vodka"); 
+	PlayerTextDrawBackgroundColor(playerid, TextdrawKFC4, 255); 
+	PlayerTextDrawFont(playerid, TextdrawKFC4, TEXT_DRAW_FONT_MODEL_PREVIEW); 
+	PlayerTextDrawLetterSize(playerid, TextdrawKFC4, 0.479999, 1.399999); 
+	PlayerTextDrawColor(playerid, TextdrawKFC4, -1); 
+	PlayerTextDrawSetOutline(playerid, TextdrawKFC4, 0); 
+	PlayerTextDrawSetProportional(playerid, TextdrawKFC4, 1); 
+	PlayerTextDrawSetShadow(playerid, TextdrawKFC4, 1); 
+	PlayerTextDrawSetPreviewModel(playerid, TextdrawKFC4, 1668);
 
-	Textdraw5 = CreatePlayerTextDraw(playerid, 274.000000, 193.000000, "Brandy"); 
-	TextDrawBackgroundColor(Textdraw5, 255); 
-	TextDrawFont(Textdraw5, 2); 
-	TextDrawLetterSize(Textdraw5, 0.400000, 1.399999); 
-	TextDrawColor(Textdraw5, -1); 
-	TextDrawSetOutline(Textdraw5, 0); 
-	TextDrawSetProportional(Textdraw5, 1); 
-	TextDrawSetShadow(Textdraw5, 1); 
+	TextdrawKFC5 = CreatePlayerTextDraw(playerid, 274.000000, 193.000000, "Brandy"); 
+	PlayerTextDrawBackgroundColor(playerid, TextdrawKFC5, 255); 
+	PlayerTextDrawFont(playerid, TextdrawKFC5, TEXT_DRAW_FONT_MODEL_PREVIEW); 
+	PlayerTextDrawLetterSize(playerid, TextdrawKFC5, 0.400000, 1.399999); 
+	PlayerTextDrawColor(playerid, TextdrawKFC5, -1); 
+	PlayerTextDrawSetOutline(playerid, TextdrawKFC5, 0); 
+	PlayerTextDrawSetProportional(playerid, TextdrawKFC5, 1); 
+	PlayerTextDrawSetShadow(playerid, TextdrawKFC5, 1); 
+	PlayerTextDrawSetPreviewModel(playerid, TextdrawKFC5, 1520);
 
-	Textdraw6 = CreatePlayerTextDraw(playerid, 274.000000, 229.000000, "Wine"); 
-	TextDrawBackgroundColor(Textdraw6, 255); 
-	TextDrawFont(Textdraw6, 2); 
-	TextDrawLetterSize(Textdraw6, 0.430000, 1.399999); 
-	TextDrawColor(Textdraw6, -1); 
-	TextDrawSetOutline(Textdraw6, 0); 
-	TextDrawSetProportional(Textdraw6, 1); 
-	TextDrawSetShadow(Textdraw6, 1); 
+	TextdrawKFC6 = CreatePlayerTextDraw(playerid, 274.000000, 229.000000, "Wine"); 
+	PlayerTextDrawBackgroundColor(playerid, TextdrawKFC6, 255); 
+	PlayerTextDrawFont(playerid, TextdrawKFC6, TEXT_DRAW_FONT_MODEL_PREVIEW); 
+	PlayerTextDrawLetterSize(playerid, TextdrawKFC6, 0.430000, 1.399999); 
+	PlayerTextDrawColor(playerid, TextdrawKFC6, -1); 
+	PlayerTextDrawSetOutline(playerid, TextdrawKFC6, 0); 
+	PlayerTextDrawSetProportional(playerid, TextdrawKFC6, 1); 
+	PlayerTextDrawSetShadow(playerid, TextdrawKFC6, 1); 
+	PlayerTextDrawSetPreviewModel(playerid, TextdrawKFC6, 1669);
 
-	Textdraw7 = CreatePlayerTextDraw(playerid, 274.000000, 264.000000, "Shawarma"); 
-	TextDrawBackgroundColor(Textdraw7, 255); 
-	TextDrawFont(Textdraw7, 2); 
-	TextDrawLetterSize(Textdraw7, 0.370000, 1.399999); 
-	TextDrawColor(Textdraw7, -1); 
-	TextDrawSetOutline(Textdraw7, 0); 
-	TextDrawSetProportional(Textdraw7, 1); 
-	TextDrawSetShadow(Textdraw7, 1);  
+	TextdrawKFC7 = CreatePlayerTextDraw(playerid, 274.000000, 264.000000, "Shawarma"); 
+	PlayerTextDrawBackgroundColor(playerid, TextdrawKFC7, 255); 
+	PlayerTextDrawFont(playerid, TextdrawKFC7, TEXT_DRAW_FONT_MODEL_PREVIEW); 
+	PlayerTextDrawLetterSize(playerid, TextdrawKFC7, 0.370000, 1.399999); 
+	PlayerTextDrawColor(playerid, TextdrawKFC7, -1); 
+	PlayerTextDrawSetOutline(playerid, TextdrawKFC7, 0); 
+	PlayerTextDrawSetProportional(playerid, TextdrawKFC7, 1); 
+	PlayerTextDrawSetShadow(playerid, TextdrawKFC7, 1);  
+	PlayerTextDrawSetPreviewModel(playerid, TextdrawKFC7, 2769);
+
 	return true;
 }
 forward GunJob(playerid);
@@ -12896,7 +12926,6 @@ ShowLogin(playerid)
 	{6495ED}\n\
 	"YE"Ты зашел на сервер {FF0000}Alpino RPG\n\
 	"YE" Игровой мод сервера: {00BFFF}"GameMode"\n\
-	"YE" Версия клиента: {00BFFF}SAMP 0.3x\n\
 	"YE" Форум сервера: {8C60C3}www.alpino-rpg.ru\n\
 	{6495ED}\n\
 	"YE"Аккаунт уже {006400}зарегистрирован "YE"на сервере.\n\
@@ -13695,5 +13724,147 @@ public OnPlayerCBug(playerid, weaponid, interval) {
 	}
 	ServerResetPlayerWeapons(playerid);
 	SendClientMessage(playerid, C_BLUE, "Вы были лишены оружия за использование бага C+ !");
+	return true;
+}
+ShowGUI(playerid) {
+	PlayerTextDrawShow(playerid, Area);
+	PlayerTextDrawShow(playerid, Area1);
+	PlayerTextDrawShow(playerid, Area2);
+	PlayerTextDrawShow(playerid, Area3);
+	PlayerTextDrawShow(playerid, Area4);
+	PlayerTextDrawShow(playerid, Area5);
+	PlayerTextDrawShow(playerid, Area6);
+	PlayerTextDrawShow(playerid, Area7);
+	PlayerTextDrawShow(playerid, Area8);
+}
+HideGUI(playerid) {
+	PlayerTextDrawHide(playerid, Area);
+	PlayerTextDrawHide(playerid, Area1);
+	PlayerTextDrawHide(playerid, Area2);
+	PlayerTextDrawHide(playerid, Area3);
+	PlayerTextDrawHide(playerid, Area4);
+	PlayerTextDrawHide(playerid, Area5);
+	PlayerTextDrawHide(playerid, Area6);
+	PlayerTextDrawHide(playerid, Area7);
+	PlayerTextDrawHide(playerid, Area8);
+}
+CreateArea(playerid) {
+	Area = CreatePlayerTextDraw(playerid, 650.000000, 0.000000, "New Area");
+	PlayerTextDrawBackgroundColor(playerid, Area, 255);
+	PlayerTextDrawFont(playerid, Area, 1);
+	PlayerTextDrawLetterSize(playerid, Area, 0.529999, 6.900000);
+	PlayerTextDrawColor(playerid, Area, -1);
+	PlayerTextDrawSetOutline(playerid, Area, 0);
+	PlayerTextDrawSetProportional(playerid, Area, 1);
+	PlayerTextDrawSetShadow(playerid, Area, 1);
+	PlayerTextDrawUseBox(playerid, Area, 1);
+	PlayerTextDrawBoxColor(playerid, Area, 148);
+	PlayerTextDrawTextSize(playerid, Area, -110.000000, 0.000000);
+	PlayerTextDrawSetSelectable(playerid, Area, 0);
+
+	Area1 = CreatePlayerTextDraw(playerid, 650.000000, 470.000000, "New Area");
+	PlayerTextDrawBackgroundColor(playerid, Area1, 255);
+	PlayerTextDrawFont(playerid, Area1, 1);
+	PlayerTextDrawLetterSize(playerid, Area1, 0.529999, -10.000000);
+	PlayerTextDrawColor(playerid, Area1, -1);
+	PlayerTextDrawSetOutline(playerid, Area1, 0);
+	PlayerTextDrawSetProportional(playerid, Area1, 1);
+	PlayerTextDrawSetShadow(playerid, Area1, 1);
+	PlayerTextDrawUseBox(playerid, Area1, 1);
+	PlayerTextDrawBoxColor(playerid, Area1, 148);
+	PlayerTextDrawTextSize(playerid, Area1, -110.000000, 0.000000);
+	PlayerTextDrawSetSelectable(playerid, Area1, 0);
+
+	Area2 = CreatePlayerTextDraw(playerid, 652.000000, 130.000000, "New Area");
+	PlayerTextDrawBackgroundColor(playerid, Area2, 255);
+	PlayerTextDrawFont(playerid, Area2, 1);
+	PlayerTextDrawLetterSize(playerid, Area2, 0.500000, -0.200000);
+	PlayerTextDrawColor(playerid, Area2, -1);
+	PlayerTextDrawSetOutline(playerid, Area2, 0);
+	PlayerTextDrawSetProportional(playerid, Area2, 1);
+	PlayerTextDrawSetShadow(playerid, Area2, 1);
+	PlayerTextDrawUseBox(playerid, Area2, 1);
+	PlayerTextDrawBoxColor(playerid, Area2, -1);
+	PlayerTextDrawTextSize(playerid, Area2, -120.000000, 11.000000);
+	PlayerTextDrawSetSelectable(playerid, Area2, 0);
+
+	Area3 = CreatePlayerTextDraw(playerid, 652.000000, 294.000000, "New Area");
+	PlayerTextDrawBackgroundColor(playerid, Area3, 255);
+	PlayerTextDrawFont(playerid, Area3, 1);
+	PlayerTextDrawLetterSize(playerid, Area3, 0.500000, -0.200000);
+	PlayerTextDrawColor(playerid, Area3, -1);
+	PlayerTextDrawSetOutline(playerid, Area3, 0);
+	PlayerTextDrawSetProportional(playerid, Area3, 1);
+	PlayerTextDrawSetShadow(playerid, Area3, 1);
+	PlayerTextDrawUseBox(playerid, Area3, 1);
+	PlayerTextDrawBoxColor(playerid, Area3, -1);
+	PlayerTextDrawTextSize(playerid, Area3, -120.000000, 11.000000);
+	PlayerTextDrawSetSelectable(playerid, Area3, 0);
+
+	Area4 = CreatePlayerTextDraw(playerid, 250.000000, 87.000000, "Alpino RPG");
+	PlayerTextDrawBackgroundColor(playerid, Area4, 255);
+	PlayerTextDrawFont(playerid, Area4, 1);
+	PlayerTextDrawLetterSize(playerid, Area4, 0.500000, 3.200000);
+	PlayerTextDrawColor(playerid, Area4, -16776961);
+	PlayerTextDrawSetOutline(playerid, Area4, 0);
+	PlayerTextDrawSetProportional(playerid, Area4, 1);
+	PlayerTextDrawSetShadow(playerid, Area4, 1);
+	PlayerTextDrawSetSelectable(playerid, Area4, 0);
+
+	Area5 = CreatePlayerTextDraw(playerid, 480.000000, 256.000000, "New Era");
+	PlayerTextDrawBackgroundColor(playerid, Area5, 255);
+	PlayerTextDrawFont(playerid, Area5, 0);
+	PlayerTextDrawLetterSize(playerid, Area5, 0.500000, 4.000000);
+	PlayerTextDrawColor(playerid, Area5, -65281);
+	PlayerTextDrawSetOutline(playerid, Area5, 0);
+	PlayerTextDrawSetProportional(playerid, Area5, 1);
+	PlayerTextDrawSetShadow(playerid, Area5, 1);
+	PlayerTextDrawSetSelectable(playerid, Area5, 0);
+
+	Area6 = CreatePlayerTextDraw(playerid, 162.000000, 60.000000, "New Area");
+	PlayerTextDrawBackgroundColor(playerid, Area6, 0);
+	PlayerTextDrawFont(playerid, Area6, 5);
+	PlayerTextDrawLetterSize(playerid, Area6, 0.500000, 1.000000);
+	PlayerTextDrawColor(playerid, Area6, -1);
+	PlayerTextDrawSetOutline(playerid, Area6, 0);
+	PlayerTextDrawSetProportional(playerid, Area6, 1);
+	PlayerTextDrawSetShadow(playerid, Area6, 1);
+	PlayerTextDrawUseBox(playerid, Area6, 1);
+	PlayerTextDrawBoxColor(playerid, Area6, -16776961);
+	PlayerTextDrawTextSize(playerid, Area6, 104.000000, 105.000000);
+	PlayerTextDrawSetPreviewModel(playerid, Area6, 411);
+	PlayerTextDrawSetPreviewRot(playerid, Area6, 0.000000, 0.000000, 0.000000, 1.000000);
+	PlayerTextDrawSetSelectable(playerid, Area6, 0);
+
+	Area7 = CreatePlayerTextDraw(playerid, 380.000000, 58.000000, "New Area");
+	PlayerTextDrawBackgroundColor(playerid, Area7, 0);
+	PlayerTextDrawFont(playerid, Area7, 5);
+	PlayerTextDrawLetterSize(playerid, Area7, 0.500000, 1.000000);
+	PlayerTextDrawColor(playerid, Area7, -1);
+	PlayerTextDrawSetOutline(playerid, Area7, 0);
+	PlayerTextDrawSetProportional(playerid, Area7, 1);
+	PlayerTextDrawSetShadow(playerid, Area7, 1);
+	PlayerTextDrawUseBox(playerid, Area7, 1);
+	PlayerTextDrawBoxColor(playerid, Area7, -16776961);
+	PlayerTextDrawTextSize(playerid, Area7, 104.000000, 105.000000);
+	PlayerTextDrawSetPreviewModel(playerid, Area7, 488);
+	PlayerTextDrawSetPreviewRot(playerid, Area7, -50.000000, 0.000000, -55.000000, 1.000000);
+	PlayerTextDrawSetSelectable(playerid, Area7, 0);
+
+	Area8 = CreatePlayerTextDraw(playerid, 550.000000, 215.000000, "New Area");
+	PlayerTextDrawBackgroundColor(playerid, Area8, 0);
+	PlayerTextDrawFont(playerid, Area8, 5);
+	PlayerTextDrawLetterSize(playerid, Area8, 0.500000, 1.000000);
+	PlayerTextDrawColor(playerid, Area8, -1);
+	PlayerTextDrawSetOutline(playerid, Area8, 0);
+	PlayerTextDrawSetProportional(playerid, Area8, 1);
+	PlayerTextDrawSetShadow(playerid, Area8, 1);
+	PlayerTextDrawUseBox(playerid, Area8, 1);
+	PlayerTextDrawBoxColor(playerid, Area8, -16776961);
+	PlayerTextDrawTextSize(playerid, Area8, 104.000000, 105.000000);
+	PlayerTextDrawSetPreviewModel(playerid, Area8, 524);
+	PlayerTextDrawSetPreviewRot(playerid, Area8, 0.000000, 0.000000, -55.000000, 1.000000);
+	PlayerTextDrawSetSelectable(playerid, Area8, 0);
+	
 	return true;
 }
